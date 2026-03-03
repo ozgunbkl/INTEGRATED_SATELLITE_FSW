@@ -119,31 +119,31 @@ A **complete, integrated flight software system** for autonomous CubeSat operati
 │                    OPERATIONS LAYER                          │
 │              Mission-Specific Functionality                  │
 │                                                              │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐   │
-│  │   ADCS   │  │   EPS    │  │  Comms   │  │ Payload  │   │
-│  │ Attitude │  │  Power   │  │  TM/TC   │  │ Science  │   │
-│  │ Control  │  │  Mgmt    │  │  Link    │  │  Data    │   │
-│  └──────────┘  └──────────┘  └──────────┘  └──────────┘   │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐      │
+│  │   ADCS   │  │   EPS    │  │  Comms   │  │ Payload  │      │
+│  │ Attitude │  │  Power   │  │  TM/TC   │  │ Science  │      │
+│  │ Control  │  │  Mgmt    │  │  Link    │  │  Data    │      │
+│  └──────────┘  └──────────┘  └──────────┘  └──────────┘      │
 └──────────────────────────────────────────────────────────────┘
 ┌──────────────────────────────────────────────────────────────┐
 │                   MANAGEMENT LAYER                           │
 │           System-Level Services & Coordination               │
 │                                                              │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐   │
-│  │   CDH    │  │   FDIR   │  │    HK    │  │  Archive │   │
-│  │  Router  │  │  Safety  │  │ Telemetry│  │  Storage │   │
-│  │  Brain   │  │  Monitor │  │  Aggr.   │  │  Flash   │   │
-│  └──────────┘  └──────────┘  └──────────┘  └──────────┘   │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐      │
+│  │   CDH    │  │   FDIR   │  │    HK    │  │  Archive │      │
+│  │  Router  │  │  Safety  │  │ Telemetry│  │  Storage │      │
+│  │  Brain   │  │  Monitor │  │  Aggr.   │  │  Flash   │      │
+│  └──────────┘  └──────────┘  └──────────┘  └──────────┘      │
 └──────────────────────────────────────────────────────────────┘
 ┌──────────────────────────────────────────────────────────────┐
 │                   FOUNDATION LAYER                           │
 │              Platform Services & Abstractions                │
 │                                                              │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐   │
-│  │   HAL    │  │   Time   │  │ Watchdog │  │  CCSDS   │   │
-│  │ Hardware │  │  MET     │  │  Safety  │  │ Protocol │   │
-│  │ Abstract │  │  Sync    │  │  Monitor │  │  Frame   │   │
-│  └──────────┘  └──────────┘  └──────────┘  └──────────┘   │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐      │
+│  │   HAL    │  │   Time   │  │ Watchdog │  │  CCSDS   │      │
+│  │ Hardware │  │  MET     │  │  Safety  │  │ Protocol │      │
+│  │ Abstract │  │  Sync    │  │  Monitor │  │  Frame   │      │
+│  └──────────┘  └──────────┘  └──────────┘  └──────────┘      │
 └──────────────────────────────────────────────────────────────┘
 ```
 
@@ -196,7 +196,7 @@ void vDeploymentTask(void *pvParameters) {
 
 ---
 
-### **2. Advanced Attitude Determination & Control (ADCS)**
+### **2. Attitude Determination & Control System (ADCS)**
 
 #### **B-dot Detumbling Algorithm**
 
@@ -297,7 +297,7 @@ if (adcs_st == ADCS_MODE_NOMINAL && eps_st == EPS_MODE_NOMINAL) {
 
 ---
 
-### **3. Hierarchical Power Management (EPS)**
+### **3. Electric Power System (EPS)**
 
 #### **Four-Mode State Machine**
 ```c
@@ -517,19 +517,19 @@ void FDIR_Process(void) {
 │                    CCSDS TM Packet                       │
 ├──────────────────────────────────────────────────────────┤
 │ PRIMARY HEADER (6 bytes)                                 │
-│  ├─ APID (11 bits): Application Process ID              │
-│  ├─ Sequence Count (14 bits): Packet counter            │
-│  └─ Length (16 bits): Packet data length                │
+│  ├─ APID (11 bits): Application Process ID               │
+│  ├─ Sequence Count (14 bits): Packet counter             │
+│  └─ Length (16 bits): Packet data length                 │
 ├──────────────────────────────────────────────────────────┤
 │ SECONDARY HEADER (8 bytes)                               │
-│  ├─ Timestamp (32 bits): Mission Elapsed Time           │
-│  └─ Type/Flags (32 bits): Packet classification         │
+│  ├─ Timestamp (32 bits): Mission Elapsed Time            │
+│  └─ Type/Flags (32 bits): Packet classification          │
 ├──────────────────────────────────────────────────────────┤
 │ USER DATA (variable)                                     │
-│  └─ Subsystem telemetry payload                         │
+│  └─ Subsystem telemetry payload                          │
 ├──────────────────────────────────────────────────────────┤
 │ CRC-16 TRAILER (2 bytes)                                 │
-│  └─ Error detection checksum                            │
+│  └─ Error detection checksum                             │
 └──────────────────────────────────────────────────────────┘
 ```
 
@@ -751,7 +751,7 @@ void SIM_ApplyBoost(float km_boost) {
 
 ---
 
-## 🔬 High-Fidelity Physics Simulation
+## 🔬 Physics Simulation
 
 ### **Attitude Dynamics Engine**
 
@@ -820,11 +820,10 @@ void Quat_Normalize(Quaternion_t* q) {
 
 ### **Test Coverage**
 
-✅ **Unit Tests:** 150+ test cases (Unity Framework)  
+✅ **Unit Tests:** Test cases (Unity Framework)  
 ✅ **Integration Tests:** Full subsystem coordination validated  
-✅ **Software-in-the-Loop:** Closed-loop physics simulation  
-✅ **Long-Duration:** 24+ hours continuous operation (no crashes)  
-✅ **Fault Injection:** All FDIR scenarios tested  
+✅ **Software-in-the-Loop:** Closed-loop physics simulation    
+✅ **Fault Injection:** FDIR scenarios tested  
 
 ### **Validated Mission Scenarios**
 
@@ -845,25 +844,25 @@ void Quat_Normalize(Quaternion_t* q) {
 
 ### **Performance Metrics**
 ```
-┌───────────────────────────────────────────────────────┐
-│ Metric                        │ Value                 │
-├───────────────────────────────────────────────────────┤
-│ Detumbling Time               │ 18-20 seconds         │
-│ Detumbling Rate               │ 10°/s → 0.18 rad/s    │
-│ Task Scheduling Jitter        │ <1 ms                 │
-│ Command Response Latency      │ <10 ms                │
-│ CRC Validation Pass Rate      │ 100% (no errors)      │
-│ Continuous Operation          │ 24+ hours (no crash)  │
-│ Memory Usage (RAM)            │ <128 KB               │
-│ Flash Usage (Code + Data)     │ <512 KB               │
-│ Watchdog Timeout              │ 15 seconds            │
-│ Power Mode Transition         │ <500 ms               │
-│ Archive Write Speed           │ ~1 ms per record      │
-│ ADCS Control Frequency        │ 10 Hz (100ms cycle)   │
-│ EPS Manager Frequency         │ 10 Hz (100ms cycle)   │
+┌────────────────────────────────────────────────────────┐
+│ Metric                        │ Value                  │
+├────────────────────────────────────────────────────────┤
+│ Detumbling Time               │ 18-20 seconds          │
+│ Detumbling Rate               │ 10°/s → 0.18 rad/s     │
+│ Task Scheduling Jitter        │ <1 ms                  │
+│ Command Response Latency      │ <10 ms                 │
+│ CRC Validation Pass Rate      │ 100% (no errors)       │
+│ Continuous Operation          │ 24+ hours (no crash)   │
+│ Memory Usage (RAM)            │ <128 KB                │
+│ Flash Usage (Code + Data)     │ <512 KB                │
+│ Watchdog Timeout              │ 15 seconds             │
+│ Power Mode Transition         │ <500 ms                │
+│ Archive Write Speed           │ ~1 ms per record       │
+│ ADCS Control Frequency        │ 10 Hz (100ms cycle)    │
+│ EPS Manager Frequency         │ 10 Hz (100ms cycle)    │
 │ Orbit Decay Rate              │ ~0.3 km/day (simulated)│
-│ Fuel Consumption (50km boost) │ 7.5% per burn         │
-└───────────────────────────────────────────────────────┘
+│ Fuel Consumption (50km boost) │ 7.5% per burn          │
+└────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -915,7 +914,7 @@ INTEGRATED_SATELLITE_FSW/
 │   │   ├── cmd_inject.c                 # Ground command simulator (test tool)
 │   │   ├── commands.h                   # Global command ID definitions
 │   │   ├── satellite_types.h            # Global data structures
-│   │   ├── task_defs.h                  # FreeRTOS task priority definitions
+│   │   ├── task_defs.h
 │   │   ├── utils.c                      # CRC-16 CCITT implementation
 │   │   ├── utils.h
 │   │   └── CMakeLists.txt
@@ -966,16 +965,10 @@ INTEGRATED_SATELLITE_FSW/
 │   ├── main.c                           # System initialization & FreeRTOS task creation
 │   └── CMakeLists.txt                   # Main build configuration
 │
-├── docs/                                # Technical Documentation
-│   ├── architecture.md                  # System architecture & data flow
-│   ├── subsystems.md                    # Detailed subsystem specifications
-│   ├── testing.md                       # Validation methodology & results
-│   └── ccsds.md                         # CCSDS protocol implementation details
 │
 ├── CMakeLists.txt                       # Root ESP-IDF build configuration
 ├── sdkconfig                            # ESP-IDF project configuration
 ├── .gitignore                           # Git ignore patterns
-├── LICENSE                              # MIT License
 └── README.md                            # This file
 ```
 
@@ -1037,42 +1030,7 @@ INTEGRATED_SATELLITE_FSW/
 
 ---
 
-## 🚀 Getting Started
-
-### **Prerequisites**
-
-**Hardware:**
-- ESP32 development board (ESP32-DevKitC, WROOM-32, etc.)
-- USB cable for programming
-
-**Software:**
-- ESP-IDF v5.x ([Installation Guide](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/))
-- CMake 3.16+
-- Python 3.8+
-
-### **Build & Flash**
-```bash
-# 1. Clone repository
-git clone https://github.com/ozgunbkl/INTEGRATED_SATELLITE_FSW.git
-cd INTEGRATED_SATELLITE_FSW
-
-# 2. Set up ESP-IDF environment
-. $HOME/esp/esp-idf/export.sh  # Or your ESP-IDF path
-
-# 3. Configure project (optional - defaults work)
-idf.py menuconfig
-
-# 4. Build project
-idf.py build
-
-# 5. Flash to ESP32
-idf.py -p /dev/ttyUSB0 flash  # Adjust port as needed
-
-# 6. Monitor serial output
-idf.py -p /dev/ttyUSB0 monitor
-```
-
-### **Expected Output (First 30 seconds)**
+## **Expected Output (First 30 seconds)**
 ```
 --- Integrated Satellite FSW Initialization Started ---
 WATCHDOG: Software Watchdog initialized.
@@ -1104,25 +1062,6 @@ TM Generator Task initialized and running.
 [T+30s] HARVEST: Solar: 5.5W | Load: 6.0W | Temp: 25.38°C | V: 8.41V | Battery: 94% | Fuel: 100.0%
 ```
 
----
-
-## 📚 Technical Documentation
-
-Comprehensive documentation available in `/docs`:
-
-### **Core Documentation**
-
-- **[Architecture Overview](docs/architecture.md)** - System design, layer structure, data flow diagrams
-- **[Subsystem Details](docs/subsystems.md)** - In-depth component specifications & state machines  
-- **[Testing Strategy](docs/testing.md)** - Validation methodology, test results, coverage reports
-- **[CCSDS Protocol](docs/ccsds.md)** - Packet format specifications & routing tables
-
-### **API Reference**
-
-Each component provides header files with function documentation:
-- `components/*/include/*.h` - Public API definitions
-- Doxygen-style comments for all exported functions
-- Data structure specifications with field descriptions
 
 ---
 
@@ -1178,112 +1117,7 @@ This project provided deep hands-on experience with:
 
 ### **Near-Term (3-6 months)**
 - [ ] **YAMCS Ground Segment Integration** - Professional mission control interface with MDB definitions
-- [ ] **Extended ADCS Algorithms** - LQR control, momentum management, precision pointing
-- [ ] **Communication Protocol** - Full RF link simulation with modulation/demodulation
-- [ ] **Hardware-in-the-Loop (HIL)** - Integration with real sensors (magnetometer, IMU, GPS)
-
-### **Medium-Term (6-12 months)**
 - [ ] **High-Fidelity Orbital Simulator** - SGP4 propagator, environmental models (gravity gradient, solar pressure, drag)
-- [ ] **Propulsion System** - Thruster control for precise delta-V maneuvers
-- [ ] **Star Tracker Integration** - High-precision attitude determination
-- [ ] **Automated Testing Pipeline** - CI/CD with GitHub Actions, automated regression testing
 
-### **Long-Term (12+ months)**
-- [ ] **On-Board AI/ML** - TinyML anomaly detection for predictive maintenance
-- [ ] **Formation Flying** - Multi-satellite coordination algorithms
-- [ ] **Advanced Payload Ops** - Camera integration, image processing, autonomous target tracking
-- [ ] **Real Hardware Deployment** - Flight-ready hardware validation on actual CubeSat platform
 
 ---
-
-## 🤝 Contributing
-
-While this is primarily a personal portfolio project, feedback and suggestions are welcome:
-
-1. **Bug Reports:** Open an issue with detailed reproduction steps
-2. **Feature Ideas:** Discuss via issues before implementing
-3. **Code Quality:** Follow existing code style (indent: 4 spaces, C11 standard)
-4. **Documentation:** Improvements to clarity always appreciated
-
----
-
-## 📧 Contact
-
-**Özgün Bakla**  
-Electrical & Electronics Engineering Student  
-Specializing in Embedded Software for Aerospace Systems
-
-📧 **Email:** ozgunbkl@gmail.com  
-🔗 **LinkedIn:** [linkedin.com/in/özgün-bakla-b37b13291](https://linkedin.com/in/özgün-bakla-b37b13291)  
-💻 **GitHub:** [github.com/ozgunbkl](https://github.com/ozgunbkl)  
-🌐 **Portfolio:** [All projects available on GitHub]
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License. See `LICENSE` file for details.
-```
-MIT License
-
-Copyright (c) 2026 Özgün Bakla
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-[Full MIT License text...]
-```
-
----
-
-## 🙏 Acknowledgments
-
-This project was built with inspiration from:
-
-- **ESA's Proba Missions** - Flight software architecture patterns
-- **NASA GSFC** - CCSDS protocol standards and best practices
-- **FreeRTOS Documentation** - Real-time operating system design principles
-- **Professional Aerospace Engineers** - System design patterns and validation methodologies
-- **Open-Source Community** - Libraries, tools, and knowledge sharing
-
-Special thanks to the embedded systems and aerospace communities for their invaluable resources and documentation.
-
----
-
-## 📊 Project Statistics
-```
-Development Time:        500+ hours over 5 months
-Lines of Code:           ~6,500 (embedded C)
-Components:              11 major subsystems
-FreeRTOS Tasks:          10+ concurrent tasks
-Test Cases:              150+ (Unity framework)
-Code Coverage:           >80% (unit + integration)
-Validated Scenarios:     12 end-to-end mission tests
-Documentation Pages:     4 (+ this README + code comments)
-Continuous Operation:    24+ hours validated (no crashes)
-```
-
----
-
-## ⚖️ Disclaimer
-
-**This is a demonstration project showcasing spacecraft software engineering capabilities.**
-
-Not intended for actual spaceflight without:
-- ✋ Extensive additional validation & verification (formal V&V process)
-- ✋ Hardware qualification & environmental testing (thermal-vacuum, vibration, radiation)
-- ✋ Regulatory compliance (frequency allocation, orbital debris mitigation)
-- ✋ Flight software certification (DO-178C or equivalent)
-- ✋ Mission assurance reviews (FRR, PDR, CDR)
-
-**For educational and portfolio demonstration purposes only.**
-
----
-
-**Built with precision. Tested with rigor. Documented with care.**
-
-*Last Updated: March 2026*
